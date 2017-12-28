@@ -90,7 +90,7 @@ Authorization:Bearer XXXX
  2.接口及参数说明
 >2.1 Token接口
 
-Url:   http://{接口域名}/user-token
+- Url:   http://{接口域名}/user-token
 - 注:更新密钥的ID为access_token,注销密钥的ID为refresh_token
 拓展参数：
 
@@ -137,5 +137,225 @@ responseBody:
 ```
 2.1.3 注销Token（DELETE）
 无参数无响应，状态码为204注销成功
+
+> 2.2 游戏数据获取接口
+
+2.2.1 游戏列表（所有游戏按权重排序）
+url:http://{接口域名}/game
+搜索的额外参数
+
+键|描述|代表含义
+:--:|:--:|:--:
+type| 类型|（数值代表的含义未定）
+theme| 题材|（数值代表的含义未定）
+form| 形式|（数值代表的含义未定）
+ucfirst| 首字母|（1:[a-e]  2:[f-k] 3:[l-p] 4:[q-u]  5:[v-z]）
+
+responseBody:
+```
+[
+    {
+        "game_players": 4,
+        "game_hit": 0,
+        "id": 96,
+        "name": "操戈天下",
+        "gamestyle": 96,
+        "pic": null,
+        "game_web": "",
+        "gametype": "页游"
+    },
+    {
+        "game_players": 0,
+        "game_hit": 0,
+        "id": 102,
+        "name": "传奇霸业",
+        "gamestyle": 102,
+        "pic": {
+            "pic1": "",
+            "pic2": "",
+            "pic3": "",
+            "pic4": "",
+            "pic5": "",
+            "pic6": "",
+            "pic7": "",
+            "pic8": "",
+            "pic9": ""
+        },
+        "game_web": "cqby.kukewan.com",
+        "gametype": "页游"
+    },
+···
+]
+```
+2.2.2 推荐游戏列表
+url:http://{接口域名}/game/recommend
+响应数据同文档所述的上个接口
+2.2.3 
+url:http://{接口域名}/game/good
+响应数据同文档所述的上个接口
+```
+[
+    {
+        "game_players": 4,
+        "game_hit": 0,
+        "id": 96,
+        "name": "操戈天下",
+        "gamestyle": "休闲益智",
+        "pic": null,
+        "game_web": "",
+        "gametype": "页游"
+    },
+    {
+        "game_players": 0,
+        "game_hit": 0,
+        "id": 102,
+        "name": "传奇霸业",
+        "gamestyle": "休闲益智",
+        "pic": {
+            "pic1": "",
+            "pic2": "",
+            "pic3": "",
+            "pic4": "",
+            "pic5": "",
+            "pic6": "",
+            "pic7": "",
+            "pic8": "",
+            "pic9": ""
+        },
+        "game_web": "cqby.kukewan.com",
+        "gametype": "页游"
+    },
+···
+]
+```
+2.2.4 登录游戏
+2.2.5 查询游戏角色信息
+
+> 2.3 获取区服数据
+
+
+拓展参数：
+
+参数|说明
+:---:|:---:
+player_num|玩家数量
+stop_notice|停服通知
+content|区服内容介绍
+server_img|区服图片
+server_sn|游戏的区服编号
+
+2.3.1 获取去区服列表
+url:http://{接口域名}/server
+GET参数
+
+参数|说明
+:---:|:---:
+gid|游戏ID
+recommend|是否推荐（0 or 1）
+openstatus|区服开启状态 (0为所有状态  1新服预告  2已开新服)
+
+responseBody:
+````
+[
+    {
+        "sid": 3963,
+        "gid": 104,
+        "serverName": "双线18区",
+        "gameName": "射雕英雄传",
+        "type": "休闲益智",
+        "serverSn": "18",
+        "isRecommend": 1,
+        "isStop": 0,
+        "startTime": "2017-12-22 16:50:45"
+    },
+    {
+        "sid": 3958,
+        "gid": 105,
+        "serverName": "双线6区",
+        "gameName": "烈火永恒",
+        "type": "休闲益智",
+        "serverSn": "6",
+        "isRecommend": 0,
+        "isStop": 0,
+        "startTime": "2017-12-14 13:00:00"
+    },
+····
+]
+````
+2.3.2 获取单个区服信息
+url:http://{接口域名}/server/{区服ID}
+> 2.4 文章
+
+url:http://{接口域名}/article
+拓展参数：
+
+参数|说明
+:---:|:---:
+tag|标签
+content|文章内容
+metaTitle|seo网页标题
+keyWords|关键词
+catLink|栏目链接
+
+2.4.1获取文章列表
+
+参数|说明
+:---:|:---:
+catid|栏目ID
+tag|是否推荐（标签名称）
+
+responseBody:
+```
+[
+    {
+        "id": "3",
+        "category_id": "1",
+        "title": "帆海汇介绍",
+        "cover": " http://backed.yii.com:88/201610/1477567061651.png",
+        "description": "帆海汇介绍",
+        "extend": "",
+        "link": "",//文章链接，有链接点击跳转到此链接，没有则通过接口获取数据
+        "up": "0",//支持人数
+        "down": "0",//反对人数
+        "view": "0",//阅读人数
+        "time": "1473606822",
+        "catTitle": "关于我们"
+    }
+]
+```
+2.4.2 获取文章详情
+
+url:http://{接口域名}/article/{文章ID}
+
+> 2.6 网站通用接口
+
+2.6.1 网站配置信息
+2.6.2 检测（身份证号、真实姓名、邮箱、用户名检测、手机号检测）
+2.6.3 手机验证码发送
+2.6.4 获取图片验证码
+> 2.7 用户信息
+
+2.7.1 注册
+2.7.2 修改信息
+2.7.3 查询信息
+>2.8 充值
+
+2.8.1 获取支付渠道列表
+2.8.2 下单
+2.8.3 付款
+2.8.4 查询订单
+
+>2.9 商品
+
+2.9.1 商品列表
+2.9.2 兑换商品
+2.9.3 商品详情
+
+
+
+
+
+
+
 
 
